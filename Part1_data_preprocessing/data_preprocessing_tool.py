@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 from sklearn.impute import SimpleImputer
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import LabelEncoder
 
 # Importing the dataset
  
@@ -40,12 +41,22 @@ x[:, 1:3] = imputer.transform(x[:, 1:3])
 print(x)
 
 #Encoding Categorical Data
+    #Encoding independent Variable
 #Country = str / how to transform them for machine elarning to udnerstand it?
 # ==> transform them into columns
 # creating binary vector for each one
 #Called one-hot encoding
  ## ==> transformers :  [("encoder" = label, OneHotEncoder() = the actual encoder, [0] ==> the actual column to transform), passtrough ==> leave other columns unchanged]
 ct = ColumnTransformer(transformers=[("encoder", OneHotEncoder(), [0])], remainder='passthrough')
-#fit method ==> apply Columntransformer
+#fit_transform method ==> apply Columntransformer
 #have to trasnform intoa rray because model amchine ealrning need an array ot ealrn
 x = np.array(ct.fit_transform(x))
+print(x)
+    #Encoding Dependent Variable
+#Labelencoder doesnt take parameter ==> just applied w.fit_transform//
+#LabelEncoder is applied on one single colum(1D array/series) 
+# ==> Here applied to dependent variable which is one column // ColumTransformer is several tranformer
+le = LabelEncoder()
+y = le.fit_transform(y)
+
+print(y)
